@@ -21,3 +21,6 @@ venv
 # Folders
 .idea
 .vscode
+
+db.sqlite3
+db3.sqlite3

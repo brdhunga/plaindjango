@@ -25,7 +25,11 @@ SECRET_KEY = 'aen#c)1$w+6dpru^y7n2*nio)=d0a*ctp0ndl&3@(=mi8q!2u3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+try:
+    DEBUG = os.environ["DEBUG"] == 'True'
+except KeyError:
+    DEBUG = False
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
