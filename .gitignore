@@ -24,3 +24,4 @@ venv
 
 db.sqlite3
 db3.sqlite3
+run.sh

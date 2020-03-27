@@ -2,100 +2,119 @@
 
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
 
-  <title>Brd's incredibly creative note taking..</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-
+    <title>Brd's incredibly creative note taking..</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 
 
 </head>
 
 <body class="font-mono bg-gray-400">
-    <!-- Container -->
+<!-- Container -->
 
-    <br />
+<br/>
 
-    <br />
+<br/>
 
-    <br />
-    <div class="container mx-auto">
+<br/>
+<div class="container mx-auto">
 
-            <div class="bg-white border-t border-b sm:rounded sm:border shadow">
-                    <div class="border-b">
-                      <div class="flex justify-right px-6 -mb-px">
-                        <h3 class="text-blue-dark py-4 font-normal text-lg">
-                            Edit Note
-                        </h3>
-                      </div>
+    <div class="bg-white border-t border-b sm:rounded sm:border shadow">
+        <div class="border-b">
+            <div class="flex justify-right px-6 -mb-px">
+                <h3 class="text-blue-dark py-4 font-normal text-lg">
+                    Edit Note: {{ noteId }}
+                </h3>
+            </div>
+        </div>
+        <div>
+            <div class="text-center px-6 py-4">
+
+                <form class="w-full">
+
+                    <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                               type="password" placeholder="Passcode"
+                               id="passInput"
+                               aria-label="Full name">
+
+                        <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+                                type="button"
+                                id="saveBtn"
+                        >
+                            Save
+                        </button>
                     </div>
-                    <div>
-                      <div class="text-center px-6 py-4">
+                    <div class="py-8">
 
-                            <form class="w-full">
+                        <div class="md:w-full px-3">
 
-                                    <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
-                                      <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" 
-                                        type="password" placeholder="Passcode"
-                                        id="passInput" 
-                                        aria-label="Full name">
+                            <!-- Create the editor container -->
+                            <div id="editor">
+                                <!-- <p>Hello World!</p>
+                                <p>Some initial <strong>bold</strong> text</p>
+                                <p><br></p> -->
+                                {{ content | safe }}
+                            </div>
 
-                                      <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" 
-                                        type="button"
-                                        id="saveBtn"
-                                        >
-                                        Save
-                                      </button>
-                                    </div>
-                                    <div class="py-8">
-
-                                            <div class="md:w-full px-3">
-
-                                                <!-- Create the editor container -->
-<div id="editor">
-        <p>Hello World!</p>
-        <p>Some initial <strong>bold</strong> text</p>
-        <p><br></p>
-      </div>
-      
-                                            </div>
+                        </div>
 
 
-                                
-                                            </div>
-                    
-                                  </form>
-                                  
-                      </div>
                     </div>
-                  </div>          
 
+                </form>
+
+            </div>
+        </div>
     </div>
 
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script>
-            var quill = new Quill('#editor', {
-              theme: 'snow'
+</div>
+
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+
+</script>
+
+<script>
+
+    const noteId = "{{noteId}}";
+    const saveBtn = document.getElementById("saveBtn")
+    const contentWrapper = document.getElementById("editor")
+
+    function saveBtnPressed() {
+        const passKey = document.getElementById("passInput").value;
+        const content = document.getElementById("editor").innerHTML;
+        saveBtn.innerHTML = "Loading...";
+
+        axios.post('/' + noteId + '/', {
+            passKey: passKey,
+            content: content,
+            noteId: noteId
+        })
+            .then(function (response) {
+                console.log(response.data);
+                saveBtn.innerHTML = "Save";
+                contentWrapper.innerHTML = response.data
+            })
+            .catch(function (error) {
+                alert("Error happened and not saved..")
+                console.log(error);
+                saveBtn.innerHTML = "Save";
             });
 
-          </script>
+    }
 
-    <script>
-        const saveBtn = document.getElementById("saveBtn")
+    saveBtn.addEventListener("click", saveBtnPressed);
 
-        function saveBtnPressed(){
-            const passkey = document.getElementById("passInput").value;
-            const content = document.getElementById("editor").innerHTML;
-            saveBtn.innerHTML = passkey;
-        }
-        
-        saveBtn.addEventListener("click", saveBtnPressed);
-    
-    </script>
-          
+</script>
 
 
 </body>
