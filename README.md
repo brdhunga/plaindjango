@@ -20,7 +20,7 @@ Kindly ensure you have the following installed on your machine:
 
 1. Clone the repository
 ```
-$ git clone https://github.com/ro6ley/plaindjango.git
+$ git clone https://github.com/brdhunga/plaindjango.git
 ```
 
 2. Check into the cloned repository
