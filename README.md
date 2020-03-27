@@ -54,3 +54,5 @@ $ python manage.py runserver
 Please feel free to raise issues using this [template](./.github/ISSUE_TEMPLATE.md) and I'll get back to you.
 
 You can also fork the repository, make changes and submit a Pull Request using this [template](./.github/PULL_REQUEST_TEMPLATE.md).
+
+Based on this: https://stackabuse.com/deploying-django-apps-to-heroku-from-github/
