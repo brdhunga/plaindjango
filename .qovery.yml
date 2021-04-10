@@ -1,0 +1,15 @@
+---
+application:
+  name: "plaindjango"
+  project: "django-proj"
+  organization: "QoveryCommunity"
+databases:
+- type: "POSTGRESQL"
+  name: "database_for_django"
+  version: "11"
+routers:
+- name: "main-plaindjango"
+  routes:
+  - application_name: "plaindjango"
+    paths:
+    - "/*"
